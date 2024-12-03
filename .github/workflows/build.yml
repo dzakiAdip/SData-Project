@@ -3,10 +3,10 @@ name: C++ Build
 on:
   push:
     branches:
-      - main
+      - utama
   pull_request:
     branches:
-      - main
+      - utama
 
 jobs:
   build:
@@ -20,5 +20,6 @@ jobs:
 
     - name: Build Project
       run: |
-        g++ -o my_program main.cpp
+        g++ -o my_program
+        "Queue Array.cpp"
         ./my_program
