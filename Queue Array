@@ -1,0 +1,113 @@
+#include <iostream>  // Mengimpor pustaka untuk input/output
+using namespace std;
+
+class Queue {
+private:
+    int front, rear, size;  // Menyimpan indeks front, rear dan ukuran queue
+    int *arr;  // Pointer untuk menyimpan elemen queue dalam array
+
+public:
+    // Konstruktor untuk menginisialisasi queue
+    Queue(int s) {
+        size = s;  // Menetapkan ukuran queue sesuai input
+        arr = new int[size];  // Mengalokasikan array untuk menyimpan elemen
+        front = -1;  // Indeks front awalnya -1 (kosong)
+        rear = -1;  // Indeks rear awalnya -1 (kosong)
+    }
+
+    // Fungsi untuk enqueue (menambah elemen ke belakang)
+    void enqueueBelakang(int value) {
+        if (rear == size - 1) {  // Memeriksa apakah queue sudah penuh
+            cout << "Queue Penuh! Tidak bisa menambah elemen.\n";  // Menampilkan pesan jika penuh
+        } else {
+            if (front == -1) front = 0;  // Jika queue kosong, set front ke 0
+            rear++;  // Menambah rear
+            arr[rear] = value;  // Menambahkan elemen pada posisi rear
+            cout << "Elemen " << value << " berhasil ditambahkan di belakang.\n";  // Menampilkan pesan keberhasilan
+        }
+    }
+
+    // Fungsi untuk dequeue (menghapus elemen dari depan)
+    void dequeueDepan() {
+        if (front == -1 || front > rear) {  // Memeriksa apakah queue kosong
+            cout << "Queue Kosong! Tidak ada elemen untuk dihapus.\n";  // Menampilkan pesan jika queue kosong
+        } else {
+            cout << "Elemen " << arr[front] << " dihapus dari depan.\n";  // Menampilkan elemen yang dihapus
+            front++;  // Mengubah front ke elemen berikutnya
+        }
+    }
+
+    // Fungsi untuk dequeue (menghapus elemen dari belakang)
+    void dequeueBelakang() {
+        if (front == -1 || front > rear) {  // Memeriksa apakah queue kosong
+            cout << "Queue Kosong! Tidak ada elemen untuk dihapus.\n";  // Menampilkan pesan jika queue kosong
+        } else {
+            cout << "Elemen " << arr[rear] << " dihapus dari belakang.\n";  // Menampilkan elemen yang dihapus
+            rear--;  // Mengubah rear ke elemen sebelumnya
+        }
+    }
+
+    // Fungsi untuk mencetak semua elemen dalam queue
+    void cetakQueue() {
+        if (front == -1 || front > rear) {  // Memeriksa apakah queue kosong
+            cout << "Queue Kosong! Tidak ada elemen untuk ditampilkan.\n";  // Menampilkan pesan jika queue kosong
+        } else {
+            cout << "Isi Queue: ";  // Menampilkan pesan awal
+            for (int i = front; i <= rear; i++) {  // Melakukan loop untuk menampilkan elemen queue
+                cout << arr[i] << " ";  // Menampilkan elemen satu per satu
+            }
+            cout << endl;  // Menambahkan newline setelah menampilkan queue
+        }
+    }
+
+    // Destructor untuk membersihkan memori
+    ~Queue() {
+        delete[] arr;  // Menghapus alokasi memori yang digunakan untuk array
+    }
+};
+
+// Fungsi utama
+int main() {
+    int size;
+    cout << "Masukkan ukuran queue: ";  // Meminta pengguna untuk memasukkan ukuran queue
+    cin >> size;  // Menerima input ukuran queue
+
+    Queue q(size);  // Membuat objek queue dengan ukuran yang ditentukan
+    int pilihan, elemen;
+
+    do {
+        // Menampilkan menu
+        cout << "\nMenu:\n";
+        cout << "1. Enqueue di belakang\n";
+        cout << "2. Dequeue di depan\n";
+        cout << "3. Dequeue di belakang\n";
+        cout << "4. Cetak queue\n";
+        cout << "5. Keluar\n";
+        cout << "Pilih operasi: ";  // Menanyakan pilihan operasi
+        cin >> pilihan;  // Menerima input pilihan operasi
+
+        switch (pilihan) {  // Menggunakan switch-case untuk menentukan tindakan sesuai pilihan
+            case 1:  // Operasi untuk menambahkan elemen ke belakang
+                cout << "Masukkan elemen untuk ditambahkan di belakang: ";
+                cin >> elemen;  // Menerima input elemen yang akan ditambahkan
+                q.enqueueBelakang(elemen);  // Memanggil fungsi enqueueBelakang untuk menambahkan elemen
+                break;
+            case 2:  // Operasi untuk menghapus elemen dari depan
+                q.dequeueDepan();  // Memanggil fungsi dequeueDepan untuk menghapus elemen dari depan
+                break;
+            case 3:  // Operasi untuk menghapus elemen dari belakang
+                q.dequeueBelakang();  // Memanggil fungsi dequeueBelakang untuk menghapus elemen dari belakang
+                break;
+            case 4:  // Operasi untuk mencetak queue
+                q.cetakQueue();  // Memanggil fungsi cetakQueue untuk menampilkan isi queue
+                break;
+            case 5:  // Pilihan untuk keluar dari program
+                cout << "Keluar dari program.\n";  // Menampilkan pesan keluar
+                break;
+            default:  // Jika input tidak valid
+                cout << "Pilihan tidak valid. Coba lagi.\n";  // Menampilkan pesan jika pilihan tidak valid
+        }
+    } while (pilihan != 5);  // Program akan terus berjalan sampai pengguna memilih untuk keluar
+
+    return 0;  // Mengakhiri program dengan mengembalikan 0
+}
