@@ -1,0 +1,24 @@
+name: C++ Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Dependencies
+      run: sudo apt-get install g++ make
+
+    - name: Build Project
+      run: |
+        g++ -o my_program main.cpp
+        ./my_program
